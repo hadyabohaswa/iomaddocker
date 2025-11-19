@@ -1,0 +1,19 @@
+name: CI - Build Moodle/IOMAD Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    - name: Build Docker Image
+      run: |
+        docker build -t iomad-app:latest .

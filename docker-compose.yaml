@@ -1,0 +1,34 @@
+services:
+  iomad-db:
+    image: mariadb:10.6
+    container_name: iomad-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: iomad
+      MYSQL_USER: iomaduser
+      MYSQL_PASSWORD: iomadpass
+    volumes:
+      - db_data:/var/lib/mysql
+
+  iomad-app:
+    build: .
+    container_name: iomad-app
+    restart: always
+    depends_on:
+      - iomad-db
+    ports:
+      - "8181:80"
+    environment:
+      MOODLE_URL: http://localhost:8181
+      DB_TYPE: mysqli
+      DB_HOST: iomad-db
+      DB_NAME: iomad
+      DB_USER: iomaduser
+      DB_PASSWORD: iomadpass
+    volumes:
+      - moodle_data:/var/www/html
+
+volumes:
+  db_data:
+  moodle_data:
