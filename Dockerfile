@@ -1,10 +1,9 @@
 FROM php:8.1-apache
 
 RUN apt-get update && apt-get install -y \
-    git unzip libpng-dev libjpeg-dev libpq-dev mariadb-client libicu-dev libzip-dev \
+    git unzip libpng-dev libjpeg-dev libpq-dev mariadb-client libicu-dev \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install gd mysqli intl opcache zip
-    && docker-php-ext-install soap
+    && docker-php-ext-install gd mysqli intl opcache
 
 # Download IOMAD
 RUN git clone https://github.com/IOMAD/iomad.git /var/www/html
